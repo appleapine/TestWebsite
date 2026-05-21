@@ -3,46 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Manim Animation Hub</title>
+    <title>ManimLab Portal - Math Animations</title>
+    
+    <!-- 1. Supabase Javascript CDN Core Library Module -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- 2. Global Database Client Connection Engine Configuration -->
+    <script>
+        const SUPABASE_URL = "https://grxvrufxqsnffzxqcpik.supabase.co"; 
+        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdyeHZydWZ4cXNuZmZ6eHFjcGlrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxMDg4MjEsImV4cCI6MjA5NDY4NDgyMX0.Gqw_zX3ANtzaa21lZoZbzdV1pOlMYoACdmbgd98_-48";
+        window.supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    </script>
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Header Navigation -->
-    <header>
-        <div class="nav-container">
-            <div class="logo">ManimLab</div>
-            <button class="menu-toggle" id="menuBtn">☰</button>
-            <ul class="nav-menu" id="navMenu">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Animations</a></li>
-                <li><a href="#">YouTube Channel</a></li>
-                <li><a href="#">About</a></li>
+    <!-- APPLICATION NAVBAR HEADER AREA -->
+    <header class="main-header">
+        <div class="logo">Coursetrek</div>
+        
+        <!-- Modern Mobile Hamburger Toggle Button -->
+        <button class="mobile-menu-toggle" id="mobile-toggle-btn" aria-label="Toggle Navigation">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <nav class="navbar" id="main-navbar">
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link active">Dashboard</a></li>
+                <li><a href="#" class="nav-link">Geometry</a></li>
+                <li><a href="#" class="nav-link">Calculus</a></li>
+                
+                <!-- Explicit Authentication Dynamic List Target Container -->
+                <li id="auth-nav-item" class="auth-nav-buttons-group">
+                    <!-- Managed entirely by JS to display either Log In + Sign Up buttons OR the User Profile Avatar -->
+                </li>
             </ul>
-        </div>
+        </nav>
     </header>
 
-    <!-- Main Content Area -->
-    <main>
-        <h1>Visualizing Mathematics</h1>
-        <p class="description">
-            Welcome to my test deployment hub. This platform will host interactive web versions of my Manim code implementations and YouTube math animations.
-        </p>
+    <!-- CONTENT BODY DASHBOARD CONTAINER -->
+    <main class="dashboard-container">
+        <section class="hero-section">
+            <h1>Interactive Mathematics Ecosystem</h1>
+            <p>Explore complex mathematical proofs and visualize spatial mechanics via programmatic Manim rendering blocks.</p>
+        </section>
 
-        <!-- Video Integration Showcase -->
-        <div class="video-container">
-            <!-- Replace the src URL below with your actual Manim video file link later -->
-            <video controls poster="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=800&q=80">
-                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
+        <!-- Dynamic Target Core Layout Grid for Video Items Injection -->
+        <div id="video-gallery-grid" class="video-grid">
+            <!-- JavaScript dynamically loops and appends video components inside here -->
         </div>
     </main>
 
-    <!-- Footer Area -->
-    <footer>
-        &copy; 2026 ManimLab Animations. Built with HTML, CSS, and JS.
-    </footer>
-<script src="script.js" defer></script>
+
+    <!-- ======================================================= -->
+    <!-- UNIFIED SECURE CORE PORTAL POPUP MODAL SCREEN           -->
+    <!-- ======================================================= -->
+    <div id="authModal" class="modal-overlay hidden-modal">
+        <div class="authentication-box-content">
+            <!-- Close Cross Button UI Element -->
+            <button id="close-modal-btn" class="close-modal-btn">&times;</button>
+
+            <header class="auth-header">
+                <h2 id="auth-title">Log in</h2>
+                <p id="auth-subtitle">Learn on your own time from top animations and lessons.</p>
+            </header>
+
+            <!-- Pure Manual Submission Auth Form Interface -->
+            <form id="unified-auth-form" novalidate>
+                <div id="form-fields-wrapper">
+                    <!-- Full Name Input Group (Shown only in SignUp mode) -->
+                    <div class="input-group" id="name-group" style="display: none;">
+                        <label for="full-name">Full Name <span class="asterisk">*</span></label>
+                        <input type="text" id="full-name" placeholder="Alex Smith">
+                    </div>
+
+                    <!-- Email Input Group (Always visible) -->
+                    <div class="input-group">
+                        <label for="email">Email <span class="asterisk">*</span></label>
+                        <input type="email" id="email" autocomplete="email" placeholder="name@email.com" required>
+                    </div>
+
+                    <!-- Password Input Group (Always visible) -->
+                    <div class="input-group">
+                        <label for="password">Password <span class="asterisk">*</span></label>
+                        <input type="password" id="password" placeholder="••••••••" required>
+                    </div>
+                </div>
+
+                <button type="submit" id="submit-btn" class="continue-btn">Log In</button>
+            </form>
+
+            <div class="social-divider">
+                <span>or</span>
+            </div>
+
+            <!-- Federated Identity Single Sign On Entry Panels -->
+            <section class="social-auth-section">
+                <button type="button" id="google-btn" class="social-provider-btn">
+                    <img src="https://www.svgrepo.com/show/355037/google.svg" alt="Google"> Continue with Google
+                </button>
+            </section>
+
+            <!-- Status Error/Success Information Prompt Alert Panel -->
+            <p id="message-box" class="message-box"></p>
+
+            <!-- Secure Screen Mode-Switching Layout Toggle Link -->
+            <p class="auth-toggle-text">
+                <span id="toggle-prompt-text">Don't have an account?</span> 
+                <a href="#" id="auth-toggle-link">Sign up</a>
+            </p>
+
+            <footer class="auth-tos-footer">
+                <p>I accept ManimLab's <a href="#">Terms of Use</a> and <a href="#">Privacy Notice</a>.</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- CORE EXECUTION FILE SEQUENCE LINKAGES -->
+    <script src="script.js"></script>
+    <script src="auth.js"></script>
 </body>
 </html>
