@@ -121,10 +121,19 @@ const googleBtn = document.getElementById('google-btn');
 if (googleBtn) {
     googleBtn.addEventListener('click', async (e) => {
         e.preventDefault();
-        await window.supabaseClient.auth.signInWithOAuth({
+        
+        // 1. Calculate the active deployment environment dynamically
+        const currentOrigin = window.location.origin;
+        const targetRedirectUrl = `${currentOrigin}/dashboard.html`;
+        // 2. Pass the explicitly verified URL down to the Supabase client router
+        const { error } = await window.supabaseClient.auth.signInWithOAuth({
             provider: 'google',
-            options: { redirectTo: window.location.origin + '/dashboard.html'}
+            options: {
+                redirectTo: targetRedirectUrl
+            }
         });
+
+        if (error) runMessagePipeline(`SSO Mismatch Exception: ${error.message}`, "red");
     });
 }
 
