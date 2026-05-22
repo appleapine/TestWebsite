@@ -123,7 +123,7 @@ if (googleBtn) {
         e.preventDefault();
         await window.supabaseClient.auth.signInWithOAuth({
             provider: 'google',
-            options: { redirectTo: window.location.origin + '/index.html' }
+            options: { redirectTo: window.location.origin + '/dashboard.html'}
         });
     });
 }
@@ -136,10 +136,13 @@ function runMessagePipeline(text, colorType) {
     else messageBox.style.color = "#0056d2";
 }
 
+// Locate this function at the absolute bottom of your auth.js file and update it:
 function executeClosurePipeline() {
     setTimeout(() => {
         const modalContainer = document.getElementById('authModal');
         if (modalContainer) modalContainer.classList.add('hidden-modal');
-        window.location.reload(); 
+        
+        // UPGRADED: Forward them directly to your private dashboard instead of reloading index!
+        window.location.href = "dashboard.html"; 
     }, 1200);
 }

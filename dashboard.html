@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ManimLab Creator Studio - Dashboard</title>
+    
+    <!-- Supabase JavaScript Core Module -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = "https://grxvrufxqsnffzxqcpik.supabase.co"; 
+        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdyeHZydWZ4cXNuZmZ6eHFjcGlrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxMDg4MjEsImV4cCI6MjA5NDY4NDgyMX0.Gqw_zX3ANtzaa21lZoZbzdV1pOlMYoACdmbgd98_-48";
+        window.supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- APPLICATION NAVBAR (Matches Index Architecture Exactly) -->
+    <header class="main-header">
+        <div class="logo">ManimLab Studio</div>
+        
+        <button class="mobile-menu-toggle" id="mobile-toggle-btn" aria-label="Toggle Navigation">
+            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </button>
+
+        <nav class="navbar" id="main-navbar">
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Public Home</a></li>
+                <li><a href="#" class="nav-link active">My Workspace</a></li>
+                <li><a href="#" class="nav-link">Analytics</a></li>
+                <li id="auth-nav-item"></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="dashboard-container">
+        <!-- NEW DEDICATED PROFILE OVERVIEW PANEL -->
+        <section class="profile-hero-card">
+            <div class="profile-hero-avatar-zone" id="large-avatar-zone">
+                <!-- Injected via dynamic JS -->
+            </div>
+            <div class="profile-hero-details">
+                <h1 id="welcome-name">Loading Creator Profile...</h1>
+                <p id="welcome-email" class="subtext"></p>
+                <span class="badge">Premium Account</span>
+            </div>
+        </section>
+
+        <!-- SUBORDINATE ACTIONS CONTAINER (To build out cool future features) -->
+        <section class="future-features-deck">
+            <div class="feature-slot-card disabled-slot">
+                <h3>+ Render New Video</h3>
+                <p>Upload your python manim scripts to compile math shapes directly in the cloud container.</p>
+            </div>
+            <div class="feature-slot-card disabled-slot">
+                <h3>My Playlists</h3>
+                <p>Organize custom curriculum maps for linear algebra, calculus, or physics visualization modules.</p>
+            </div>
+        </section>
+
+        <h2 class="section-title">Your Saved Animations</h2>
+        <div id="video-gallery-grid" class="video-grid">
+            <!-- Dynamically populates matching the grid loops -->
+        </div>
+    </main>
+
+    <!-- Specific Dashboard Controller Logic Core -->
+    <script src="dashboard.js"></script>
+</body>
+</html>

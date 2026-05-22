@@ -33,95 +33,59 @@ async function fetchAndRenderVideos() {
             </div>
         `).join('');
     } else {
-        galleryGrid.innerHTML = `<p style="color: #94a3b8;">No videos found.</p>`;
+        galleryGrid.innerHTML = `<p style="color: #94a3b8;">No video rows match queries inside database repository context.</p>`;
     }
 }
 
 // ==========================================
+// SECTION 2: APPLICATION RUNTIME SESSION MANAGER
+// ==========================================
+// ==========================================
 // SECTION 2: RUNTIME NAVBAR SESSION SWITCHER
 // ==========================================
 async function checkUserSession() {
+    // Look for active credentials in browser LocalStorage
     const { data: { user } } = await window.supabaseClient.auth.getUser();
     const authListItem = document.getElementById('auth-nav-item');
 
     if (!authListItem) return;
 
     if (user) {
-        // AUTHENTICATED STATE: Render Avatar Dropdown
-        const userEmail = user.email;
-        const displayName = user.user_metadata?.full_name || userEmail.split('@')[0];
-        const avatarUrl = user.user_metadata?.avatar_url || user.user_metadata?.picture;
-        const initialLetter = displayName.charAt(0).toUpperCase();
+        // AUTOMATED DEVICE SECURITY ROUTER:
+        // If they are already logged in, skip the home page and send them to the workspace!
+        window.location.href = "dashboard.html";
+        return;
+    } 
+    
+    // GUEST MODE: The buttons already exist in HTML! Just bind click triggers to open the modal.
+    const loginTrigger = document.getElementById('nav-login-trigger');
+    const signupTrigger = document.getElementById('nav-signup-trigger');
 
-        authListItem.className = "profile-wrapper"; // Remove buttons styling layout flex
-        authListItem.innerHTML = `
-            <button id="profile-avatar-btn" class="avatar-circle-btn" aria-label="User profile">
-                ${avatarUrl ? `<img src="${avatarUrl}" alt="Profile Avatar">` : `<span>${initialLetter}</span>`}
-            </button>
-            
-            <div id="profile-dropdown-box" class="profile-dropdown hidden-dropdown">
-                <div class="dropdown-header">
-                    <span class="user-fullname">${displayName}</span>
-                    <span class="user-email-handle">${userEmail}</span>
-                </div>
-                <hr class="dropdown-divider">
-                <button id="signout-link" class="dropdown-logout-btn">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
-                    Sign Out
-                </button>
-            </div>
-        `;
-
-        const avatarBtn = document.getElementById('profile-avatar-btn');
-        const dropdownBox = document.getElementById('profile-dropdown-box');
-
-        avatarBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            dropdownBox.classList.toggle('hidden-dropdown');
-        });
-
-        document.getElementById('signout-link').addEventListener('click', async (e) => {
-            e.preventDefault();
-            await window.supabaseClient.auth.signOut();
-            window.location.reload();
-        });
-
-        window.addEventListener('click', () => {
-            dropdownBox.classList.add('hidden-dropdown');
-        });
-
-    } else {
-        // GUEST STATE: Render explicit Log In and Sign Up triggers side-by-side
-        authListItem.className = "auth-nav-buttons-group";
-        authListItem.innerHTML = `
-            <button id="nav-login-trigger" class="nav-login-link-btn">Log In</button>
-            <button id="nav-signup-trigger" class="nav-signup-solid-btn">Sign Up</button>
-        `;
-
-        // Attach unique window triggers to spin up modal in specified configurations
-        document.getElementById('nav-login-trigger').addEventListener('click', () => {
+    if (loginTrigger) {
+        loginTrigger.addEventListener('click', () => {
             openAuthPopupModal("login");
         });
+    }
 
-        document.getElementById('nav-signup-trigger').addEventListener('click', () => {
+    if (signupTrigger) {
+        signupTrigger.addEventListener('click', () => {
             openAuthPopupModal("signup");
         });
     }
 }
 
-// Helper utility to fade in modal and notify the auth manager configuration variables
+// Helper method to open the central container box overlay
 function openAuthPopupModal(initialMode) {
     const authModal = document.getElementById('authModal');
     if (!authModal) return;
     
     authModal.classList.remove('hidden-modal');
     
-    // Globally defined hook method located in auth.js
+    // Calls the controller routing method located inside auth.js
     if (typeof window.switchAuthViewMode === 'function') {
         window.switchAuthViewMode(initialMode);
     }
 }
-
 // ==========================================
 // SECTION 3: MODAL CLOSURE INTERACTIVE ACTIONS
 // ==========================================
@@ -151,9 +115,16 @@ if (mobileToggleBtn && mainNavbar) {
         mobileToggleBtn.classList.toggle('open-icon');
         mainNavbar.classList.toggle('mobile-open');
     });
+
+    mainNavbar.addEventListener('click', (e) => {
+        if (e.target.classList.contains('nav-link')) {
+            mobileToggleBtn.classList.remove('open-icon');
+            mainNavbar.classList.remove('mobile-open');
+        }
+    });
 }
 
-// Initial sequence triggers
+// Initial sequence mount triggers on page download
 document.addEventListener("DOMContentLoaded", () => {
     fetchAndRenderVideos();
     checkUserSession();

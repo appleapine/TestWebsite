@@ -20,30 +20,32 @@
 <body>
 
     <!-- APPLICATION NAVBAR HEADER AREA -->
-    <header class="main-header">
-        <div class="logo">Coursetrek</div>
-        
-        <!-- Modern Mobile Hamburger Toggle Button -->
-        <button class="mobile-menu-toggle" id="mobile-toggle-btn" aria-label="Toggle Navigation">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </button>
 
-        <nav class="navbar" id="main-navbar">
-            <ul class="nav-menu">
-                <li><a href="#" class="nav-link active">Dashboard</a></li>
-                <li><a href="#" class="nav-link">Geometry</a></li>
-                <li><a href="#" class="nav-link">Calculus</a></li>
-                
-                <!-- Explicit Authentication Dynamic List Target Container -->
-                <li id="auth-nav-item" class="auth-nav-buttons-group">
-                    <!-- Managed entirely by JS to display either Log In + Sign Up buttons OR the User Profile Avatar -->
-                </li>
-            </ul>
-        </nav>
-    </header>
+<!-- APPLICATION NAVBAR HEADER AREA -->
+<header class="main-header">
+    <div class="logo">ManimLab</div>
+    
+    <!-- Modern Mobile Hamburger Toggle Button -->
+    <button class="mobile-menu-toggle" id="mobile-toggle-btn" aria-label="Toggle Navigation">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </button>
 
+    <nav class="navbar" id="main-navbar">
+        <ul class="nav-menu">
+            <li><a href="#" class="nav-link active">Dashboard</a></li>
+            <li><a href="#" class="nav-link">Geometry</a></li>
+            <li><a href="#" class="nav-link">Calculus</a></li>
+            
+            <!-- SECURED: Both buttons are now baked straight into the HTML -->
+            <li id="auth-nav-item" class="auth-nav-buttons-group">
+                <button id="nav-login-trigger" class="nav-login-link-btn">Log In</button>
+                <button id="nav-signup-trigger" class="nav-signup-solid-btn">Sign Up</button>
+            </li>
+        </ul>
+    </nav>
+</header>
     <!-- CONTENT BODY DASHBOARD CONTAINER -->
     <main class="dashboard-container">
         <section class="hero-section">
